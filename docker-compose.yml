@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mtproxy:
+    image: mtproxy/mtproxy:latest
+    container_name: mtproxy
+    restart: unless-stopped
+    
+    ports:
+      - "10443:443"
+
+    # Persist generated secrets and config between restarts/upgrades.
+    # volumes:
+    #   - mtproxy-data:/data
+        
+    environment:
+      SECRET: "${SECRET:-}"          
+    #   SECRET_COUNT: "${SECRET_COUNT:-1}"
+    #   TAG: "${TAG:-}"                # Ad tag from @MTProxybot (optional)
+      WORKERS: "${WORKERS:-1}"       # Bump if you expect many clients
+    #   IP: "${EXTERNAL_IP:-}"         # Set if behind NAT and auto-detect is wrong (optional)      
+
+# volumes:
+#   mtproxy-data:
